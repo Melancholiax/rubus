@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">RUBUS</string>
+
+    <string name="title_activity_select_screen">select_screen</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="title_activity_login">Sign in</string>
+
+    <string-array name="route_array">
+        <item>A</item>
+        <item>B</item>
+        <item>C</item>
+        <item>EE</item>
+        <item>F</item>
+        <item>H</item>
+        <item>LX</item>
+        <item>REX B</item>
+        <item>REX L</item>
+        <item>Weekend 1</item>
+        <item>Weekend 2</item>
+        <item>New Brunsquick 1</item>
+        <item>New Brunsquick 2</item>
+    </string-array>
+
+    <string-array name="stop_array">
+        <item>Mercury</item>
+        <item>Venus</item>
+        <item>Earth</item>
+        <item>Mars</item>
+        <item>Jupiter</item>
+        <item>Saturn</item>
+        <item>Uranus</item>
+        <item>Neptune</item>
+    </string-array>
+
+    <string name="title_activity_test">test</string>
+</resources>
