@@ -22,11 +22,20 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".select_screen"
-            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:name=".route_select"
             android:label="Rutgers Bus Management (WIP)"
-            android:theme="@style/AppTheme" />
-
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".settings"
+            android:label="Rutgers Bus Management (WIP)" />
+        <activity
+            android:name=".status"
+            android:label="Rutgers Bus Management (WIP)" />
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".info"
+            android:label="Rutgers Bus Management (WIP)" />
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>
