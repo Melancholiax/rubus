@@ -1,9 +1,8 @@
 package se2018project.rubus;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,8 +17,18 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+
 public class route_select extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
+
+    GoogleMap mGoogleMap;
+    String selectedRoute;
+    String selectedStop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +46,13 @@ public class route_select extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        // google map
+        if(googleServicesAvailable()) {
+            initMap();
+        } else {
+            // don't load map
+        }
+
         // set route spinner
         Spinner route = findViewById(R.id.route_spinner);
         ArrayAdapter<CharSequence> route_adapter = ArrayAdapter.createFromResource(this,
@@ -44,10 +60,15 @@ public class route_select extends AppCompatActivity
         route_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         route.setAdapter(route_adapter);
 
-        // not working in this API version?
-        route.setPrompt("Select Route");
 
-        // stop spinner listener
+        // set default stop spinner
+        Spinner stop = findViewById(R.id.stop_spinner);
+        ArrayAdapter<CharSequence> stop_adapter = ArrayAdapter.createFromResource(this,
+                R.array.A_array, android.R.layout.simple_spinner_item);
+        route_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        stop.setAdapter(stop_adapter);
+
+        // route spinner listener
         route.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -55,10 +76,10 @@ public class route_select extends AppCompatActivity
                 Spinner stop = findViewById(R.id.stop_spinner);
 
                 // get currently selected stop text as String
-                String currentRoute = parent.getItemAtPosition(position).toString();
+                selectedRoute = parent.getItemAtPosition(position).toString();
 
                 // fill stop spinner based upon route selection
-                switch(currentRoute) {
+                switch(selectedRoute) {
 
                     case "A (Busch and College Ave.)":
                         ArrayAdapter<CharSequence> A_adapter = ArrayAdapter.createFromResource(getApplicationContext(),
@@ -159,9 +180,22 @@ public class route_select extends AppCompatActivity
             }
         });
 
+        // spinner listener
+        stop.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                // get currently selected route text as String
+                selectedStop = parent.getItemAtPosition(position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
 
-        // TODO mapview key and integration
     }
 
     @Override
@@ -236,7 +270,36 @@ public class route_select extends AppCompatActivity
         return true;
     }
 
+    // check for google play services
+    public boolean googleServicesAvailable() {
+        GoogleApiAvailability api = GoogleApiAvailability.getInstance();
+        int isAvailable = api.isGooglePlayServicesAvailable(this);
+        if(isAvailable == ConnectionResult.SUCCESS) {
+            return true;
+        } else if (api.isUserResolvableError(isAvailable)) {
+            Dialog dialog = api.getErrorDialog(this, isAvailable, 0);
+            dialog.show();
+        } else {
+            Toast.makeText(this, "Unable to connect to Google Play Services", Toast.LENGTH_LONG).show();
+        }
+        return false;
+    }
 
+    private void initMap() {
+        //MapFragment mapFragment = getFragmentManager().findFragmentById(R.id.mapFragment);
+        //mapFragment.getMapAsync(this);
+    }
 
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mGoogleMap = googleMap;
+    }
+
+    public void go_button (View view) {
+        Intent intent = new Intent(this, status.class);
+        intent.putExtra("route", selectedRoute);
+        intent.putExtra("stop", selectedStop);
+        startActivity(intent);
+    }
 
 }
