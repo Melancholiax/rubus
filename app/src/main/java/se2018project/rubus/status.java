@@ -1,5 +1,6 @@
 package se2018project.rubus;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 public class status extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -22,15 +24,6 @@ public class status extends AppCompatActivity
         setContentView(R.layout.activity_status);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -54,9 +47,7 @@ public class status extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.status, menu);
-        return true;
+        return false;
     }
 
     @Override
@@ -80,17 +71,37 @@ public class status extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_selection) {
 
-        } else if (id == R.id.nav_slideshow) {
+            Intent intent = new Intent(this, route_select.class);
+            startActivity(intent);
+            finish();
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_maps) {
 
-        } else if (id == R.id.nav_share) {
+            Intent intent = new Intent(this, maps.class);
+            startActivity(intent);
+            finish();
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_settings) {
+
+            Intent intent = new Intent(this, settings.class);
+            startActivity(intent);
+            finish();
+
+        } else if (id == R.id.nav_info) {
+
+            Intent intent = new Intent(this, info.class);
+            startActivity(intent);
+            finish();
+
+        } else if (id == R.id.nav_logout) {
+
+            Intent intent = new Intent(this, login.class);
+            Toast.makeText(getApplicationContext(), "Successfully logged out.",
+                    Toast.LENGTH_SHORT).show();
+            startActivity(intent);
+            finish();
 
         }
 

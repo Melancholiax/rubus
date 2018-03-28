@@ -1,18 +1,35 @@
 package se2018project.rubus;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class login extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        // password reset web page
+        TextView Button = findViewById(R.id.forget_button);
+
+        Button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                intent.setData(Uri.parse("https://netid.rutgers.edu/displayForgottenPasswordForm.htm"));
+                startActivity(intent);
+            }
+        });
+
     }
 
 
@@ -24,7 +41,7 @@ public class login extends AppCompatActivity {
         EditText password_input = findViewById(R.id.password_input);
         String password = password_input.getText().toString();
 
-        // TODO temporary login dummy data until firebase integration
+        // TODO temporary login dummy data until CAS integration
         if(true) {
             Toast.makeText(getApplicationContext(), "Login successful.",
                     Toast.LENGTH_SHORT).show();
@@ -39,10 +56,8 @@ public class login extends AppCompatActivity {
         }
     }
 
-    // called when the user taps the forgot password button
-    public void forgot_button(View view) {
-
-        // TODO add password reset link
+    @Override
+    public void onBackPressed() {
 
     }
 

@@ -2,8 +2,6 @@ package se2018project.rubus;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,16 +13,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-public class route_select extends AppCompatActivity
+public class maps extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_route_select);
+        setContentView(R.layout.activity_maps);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -38,7 +37,7 @@ public class route_select extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         // set route spinner
-        Spinner route = findViewById(R.id.route_spinner);
+        Spinner route = findViewById(R.id.routemap_spinner);
         ArrayAdapter<CharSequence> route_adapter = ArrayAdapter.createFromResource(this,
                 R.array.routes_array, android.R.layout.simple_spinner_item);
         route_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -52,7 +51,7 @@ public class route_select extends AppCompatActivity
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                Spinner stop = findViewById(R.id.stop_spinner);
+                ImageView map = findViewById(R.id.map_imageview);
 
                 // get currently selected stop text as String
                 String currentRoute = parent.getItemAtPosition(position).toString();
@@ -61,94 +60,55 @@ public class route_select extends AppCompatActivity
                 switch(currentRoute) {
 
                     case "A (Busch and College Ave.)":
-                        ArrayAdapter<CharSequence> A_adapter = ArrayAdapter.createFromResource(getApplicationContext(),
-                                R.array.A_array, android.R.layout.simple_spinner_item);
-                        A_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        stop.setAdapter(A_adapter);
+                        map.setImageResource(R.drawable.a_route);
                         break;
 
                     case "B (Busch and Livingston)":
-                        ArrayAdapter<CharSequence> B_adapter = ArrayAdapter.createFromResource(getApplicationContext(),
-                                R.array.B_array, android.R.layout.simple_spinner_item);
-                        B_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        stop.setAdapter(B_adapter);
+                        map.setImageResource(R.drawable.b_route);
                         break;
 
                     case "C (Busch)":
-                        ArrayAdapter<CharSequence> C_adapter = ArrayAdapter.createFromResource(getApplicationContext(),
-                                R.array.C_array, android.R.layout.simple_spinner_item);
-                        C_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        stop.setAdapter(C_adapter);
+                        map.setImageResource(R.drawable.c_route);
                         break;
 
                     case "EE (College Ave. and Cook Douglass)":
-                        ArrayAdapter<CharSequence> EE_adapter = ArrayAdapter.createFromResource(getApplicationContext(),
-                                R.array.EE_array, android.R.layout.simple_spinner_item);
-                        EE_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        stop.setAdapter(EE_adapter);
+                        map.setImageResource(R.drawable.ee_route);
                         break;
 
                     case "F (College Ave. and Cook Douglass)":
-                        ArrayAdapter<CharSequence> F_adapter = ArrayAdapter.createFromResource(getApplicationContext(),
-                                R.array.F_array, android.R.layout.simple_spinner_item);
-                        F_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        stop.setAdapter(F_adapter);
+                        map.setImageResource(R.drawable.f_route);
                         break;
 
                     case "H (Busch and College Ave.)":
-                        ArrayAdapter<CharSequence> H_adapter = ArrayAdapter.createFromResource(getApplicationContext(),
-                                R.array.H_array, android.R.layout.simple_spinner_item);
-                        H_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        stop.setAdapter(H_adapter);
+                        map.setImageResource(R.drawable.h_route);
                         break;
 
                     case "LX (Livingston and College Ave.)":
-                        ArrayAdapter<CharSequence> LX_adapter = ArrayAdapter.createFromResource(getApplicationContext(),
-                                R.array.LX_array, android.R.layout.simple_spinner_item);
-                        LX_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        stop.setAdapter(LX_adapter);
+                        map.setImageResource(R.drawable.lx_route);
                         break;
 
                     case "REX B (Busch. and Cook Douglass)":
-                        ArrayAdapter<CharSequence> REXB_adapter = ArrayAdapter.createFromResource(getApplicationContext(),
-                                R.array.REXB_array, android.R.layout.simple_spinner_item);
-                        REXB_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        stop.setAdapter(REXB_adapter);
+                        map.setImageResource(R.drawable.rexb_route);
                         break;
 
                     case "REX L (Livingston and Cook Douglass)":
-                        ArrayAdapter<CharSequence> REXL_adapter = ArrayAdapter.createFromResource(getApplicationContext(),
-                                R.array.REXL_array, android.R.layout.simple_spinner_item);
-                        REXL_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        stop.setAdapter(REXL_adapter);
+                        map.setImageResource(R.drawable.rexl_route);
                         break;
 
                     case "Weekend 1 (All Campuses)":
-                        ArrayAdapter<CharSequence> WEEKEND1_adapter = ArrayAdapter.createFromResource(getApplicationContext(),
-                                R.array.WEEKEND1_array, android.R.layout.simple_spinner_item);
-                        WEEKEND1_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        stop.setAdapter(WEEKEND1_adapter);
+                        map.setImageResource(R.drawable.weekend1_route);
                         break;
 
                     case "Weekend 2 (All Campuses)":
-                        ArrayAdapter<CharSequence> WEEKEND2_adapter = ArrayAdapter.createFromResource(getApplicationContext(),
-                                R.array.WEEKEND2_array, android.R.layout.simple_spinner_item);
-                        WEEKEND2_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        stop.setAdapter(WEEKEND2_adapter);
+                        map.setImageResource(R.drawable.weekend2_route);
                         break;
 
                     case "New Brunsquick 1":
-                        ArrayAdapter<CharSequence> BRUNSQUICK1_adapter = ArrayAdapter.createFromResource(getApplicationContext(),
-                                R.array.BRUNSQUICK1_array, android.R.layout.simple_spinner_item);
-                        BRUNSQUICK1_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        stop.setAdapter(BRUNSQUICK1_adapter);
+                        map.setImageResource(R.drawable.brunsquick1_route);
                         break;
 
                     case "New Brunsquick 2":
-                        ArrayAdapter<CharSequence> BRUNSQUICK2_adapter = ArrayAdapter.createFromResource(getApplicationContext(),
-                                R.array.BRUNSQUICK2_array, android.R.layout.simple_spinner_item);
-                        BRUNSQUICK2_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        stop.setAdapter(BRUNSQUICK2_adapter);
+                        map.setImageResource(R.drawable.brunsquick2_route);
                         break;
                 }
             }
@@ -160,8 +120,6 @@ public class route_select extends AppCompatActivity
         });
 
 
-
-        // TODO mapview key and integration
     }
 
     @Override
@@ -204,12 +162,12 @@ public class route_select extends AppCompatActivity
 
             Intent intent = new Intent(this, route_select.class);
             startActivity(intent);
-            finish();
 
         } else if (id == R.id.nav_maps) {
 
             Intent intent = new Intent(this, maps.class);
             startActivity(intent);
+            finish();
 
         } else if (id == R.id.nav_settings) {
 
@@ -235,8 +193,4 @@ public class route_select extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
-
-
-
 }
