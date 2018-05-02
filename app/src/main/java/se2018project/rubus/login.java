@@ -10,10 +10,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.client.Firebase;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
 public class login extends AppCompatActivity {
+
+    public static Firebase firebase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +37,11 @@ public class login extends AppCompatActivity {
             }
         });
 
-    }
+        // firebase stuff
+        firebase.setAndroidContext(this);
+        firebase = new Firebase("https://android-bus-ac5e3.firebaseio.com/");
 
+    }
 
     // called when the user taps the login button
     public void login_button(View view) {
@@ -47,9 +53,11 @@ public class login extends AppCompatActivity {
         String password = password_input.getText().toString();
 
         // TODO temporary login dummy data until CAS integration
-        if(true) {
+        if(!netid.equals("")) {
+            intent.putExtra("netid", netid);
             Toast.makeText(getApplicationContext(), "Login successful.",
                     Toast.LENGTH_SHORT).show();
+            login.firebase.child("users").push().setValue(netid);
             startActivity(intent);
             finish();
         }

@@ -1,6 +1,7 @@
 package se2018project.rubus;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,10 +14,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class status extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    String netid;
+    String selectedRoute;
+    String selectedStart;
+    String selectedStop;
+
+    SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+    SimpleDateFormat sdfTime = new SimpleDateFormat("hh:mm");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +46,23 @@ public class status extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        Intent intent = getIntent();
+        netid = intent.getStringExtra("netid");
+        selectedRoute = intent.getStringExtra("route");
+        selectedStart = intent.getStringExtra("start");
+        selectedStop = intent.getStringExtra("stop");
+
+        TextView route = findViewById(R.id.route);
+        TextView start = findViewById(R.id.start);
+        TextView stop = findViewById(R.id.stop);
+
+        route.setText(selectedRoute);
+        start.setText(selectedStart);
+        stop.setText(selectedStop);
+
+        // firebase stuff
+        login.firebase.child("bus").push().setValue(new Bus(netid,selectedStart, selectedStop, selectedRoute, sdf.format(new Date()), sdfTime.format(new Date())));
     }
 
     @Override
@@ -41,7 +71,9 @@ public class status extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            Intent intent = new Intent(this, route_select.class);
+            startActivity(intent);
+            finish();
         }
     }
 
@@ -85,9 +117,11 @@ public class status extends AppCompatActivity
 
         } else if (id == R.id.nav_settings) {
 
-            Intent intent = new Intent(this, settings.class);
+            Intent intent = new Intent();
+            intent.setAction(Intent.ACTION_VIEW);
+            intent.addCategory(Intent.CATEGORY_BROWSABLE);
+            intent.setData(Uri.parse("https://friendlychat-c8aef.firebaseapp.com/"));
             startActivity(intent);
-            finish();
 
         } else if (id == R.id.nav_info) {
 

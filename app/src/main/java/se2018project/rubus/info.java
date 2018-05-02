@@ -1,6 +1,7 @@
 package se2018project.rubus;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -86,7 +87,10 @@ public class info extends AppCompatActivity
 
         } else if (id == R.id.nav_settings) {
 
-            Intent intent = new Intent(this, settings.class);
+            Intent intent = new Intent();
+            intent.setAction(Intent.ACTION_VIEW);
+            intent.addCategory(Intent.CATEGORY_BROWSABLE);
+            intent.setData(Uri.parse("https://friendlychat-c8aef.firebaseapp.com/"));
             startActivity(intent);
 
         } else if (id == R.id.nav_info) {
